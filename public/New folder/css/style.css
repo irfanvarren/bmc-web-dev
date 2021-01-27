@@ -1,0 +1,92 @@
+/* 
+Primary Color : #5D3CA6;
+Accent Color : 
+*/
+
+/* Mobile */
+.bg-blue-gray {
+    background-color: #42485d;
+}
+.h-50 {
+    height: 50px;
+}
+.w-55 {
+    width: 55px;
+}
+.w-40 {
+    width: 40px;
+}
+.h-40 {
+    height: 40px;
+}
+.cr-pointer {
+    cursor: pointer;
+}
+header #logo .h3 {
+    line-height: 50px;
+}
+main {
+    height: 92.6vh;
+}
+
+#side_bar {
+    width: 16.66%;
+    padding: 0 15px;
+    /* transition disini kalau mau animasi buka & tutup */
+}
+
+#side_bar.hide {
+    width: 0;
+    padding: 0;
+    transition: all 0.7s ease; /* transition disini kalau cuman mau tutup */
+}
+
+#side_bar.hide > div {
+    display: none;
+}
+
+#side_bar a {
+    color: white;
+    text-transform: none;
+    text-decoration: none;
+}
+
+#content {
+    width: 83.33%;
+
+    padding: 0 15px;
+}
+
+#content.full-width {
+    transition: all 0.7s ease;
+    width: 100%;
+}
+
+@media (max-width: 576px) {
+    #side_bar {
+        transition: none;
+        width: 100%;
+    }
+    #content {
+        transition: none;
+        width: 100%;
+    }
+}
+
+/* Tablet */
+
+@media (max-width: 768px) {
+    .hide {
+        display: none;
+    }
+}
+
+@media (max-width: 992px) {
+    .hide-menu {
+        display: none;
+    }
+}
+
+/* Desktop */
+@media (min-width: 1200px) {
+}

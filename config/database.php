@@ -8,7 +8,6 @@ $host = $url["host"];
 $username = $url["user"];
 $password = $url["pass"];
 $database = substr($url["path"], 1);
-
 return [
 
     /*
@@ -71,13 +70,13 @@ return [
         ],
          'heroku_mysql' => [
             'driver'    => 'mysql',
-        'host'      => $host,
-        'database'  => $database,
-        'username'  => $username,
-        'password'  => $password,
-        'charset'   => 'utf8',
-        'collation' => 'utf8_unicode_ci',
-        'prefix'    => '',
+            'host'      => $host,
+            'database'  => $database,
+            'username'  => $username,
+            'password'  => $password,
+            'charset'   => 'utf8',
+            'collation' => 'utf8_unicode_ci',
+            'prefix'    => '',
             ],
 
         'pgsql' => [

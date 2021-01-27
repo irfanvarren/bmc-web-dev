@@ -18,6 +18,7 @@ class DefaultAccount extends Seeder
             'nama_akun' => 'Admin',
             'username' => 'admin',
             'email_akun' => 'admin@bmc.com',
+            'level' => 'Super Admin',
             'password' => bcrypt('12345678'),
         ]);
     }

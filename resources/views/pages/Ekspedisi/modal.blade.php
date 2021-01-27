@@ -9,7 +9,7 @@
                     </button>
             </div>
             <div class="modal-body">
-                <form action="/adm/ekspedisi/simpan_data" method="POST">
+                <form action="{{url('/adm/ekspedisi/simpan_data')}}" method="POST">
                     @csrf
                     <table>
                         <tr>

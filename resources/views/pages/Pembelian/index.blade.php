@@ -61,8 +61,39 @@
                             <div class="col-xl-8">
                                 <select name="alamat_toko" class="form-control" id="alamat_toko" required>
                                     <option value="-"> Pilih Alamat </option>
-                                    <option value="-"> Kalimantan Barat </option>
-                                    <option value="-"> Kalimantan Utara </option>
+                                    <option value="Banda Aceh"> Aceh </option>
+                                    <option value="Medan"> Sumatera Utara </option>
+                                    <option value="Padang"> Sumatera Barat </option>
+                                    <option value="Pekanbaru"> Riau </option>
+                                    <option value="Jambi"> Jambi </option>
+                                    <option value="Palembang"> Sumatera Selatan </option>
+                                    <option value="Pangkal Pinang"> Kepulauan Bangka Belitung </option>
+                                    <option value="Bengkulu"> Bengkulu </option>
+                                    <option value="Lampung"> Bandar Lampung </option>
+                                    <option value="Jakarta"> DKI Jakarta </option>
+                                    <option value="Serang"> Banten </option>
+                                    <option value="Bandung"> Jawa Barat </option>
+                                    <option value="Semarang"> Jawa Tengah </option>
+                                    <option value="Yogyakarta"> DI Yogyakarta </option>
+                                    <option value="Surabaya"> Jawa Timur </option>
+                                    <option value="Bali"> Denpasar </option>
+                                    <option value="Mataram"> Nusa Tenggara Barat </option>
+                                    <option value="Kupang"> Nusa Tenggara Timur </option>
+                                    <option value="Pontianak"> Kalimantan Barat </option>
+                                    <option value="Palangkaraya"> Kalimantan Tengah </option>
+                                    <option value="Banjarmasin"> Kalimantan Selatan </option>
+                                    <option value="Samarinda"> Kalimantan Timur </option>
+                                    <option value="Tanjung Selor"> Kalimantan Utara </option>
+                                    <option value="Manado"> Sulawesi Utara </option>
+                                    <option value="Gorontalo"> Gorontalo </option>
+                                    <option value="Palu"> Sulawesi Tengah </option>
+                                    <option value="Mamuju"> Sulawesi Barat </option>
+                                    <option value="Makasar"> Sulawesi Selatan </option>
+                                    <option value="Kendari"> Sulawesi Tenggara </option>
+                                    <option value="Ambon"> Maluku </option>
+                                    <option value="Sofifi"> Maluku Utara </option>
+                                    <option value="Manokwari"> Papua Barat </option>
+                                    <option value="Jayapura"> Papua </option>
                                 </select>
                             </div>
                         </div>
@@ -189,7 +220,9 @@
                                             <label for="Jenis Barang"> Jenis Barang </label>
                                             <select name="dtljenis_barang" id="dtljenis_barang" class="form-control">
                                                 <option value="-"> --- PILIH --- </option>
-                                                <option value="Cream"> Cream </option>
+                                                @foreach($all_jenis as $aj)
+                                                    <option value="{{$aj->jenis_barang}}"> {{$aj->jenis_barang}} </option>
+                                                @endforeach
                                             </select>
                                         </div>
                                         <div class="col-lg-2 float-right ">
@@ -434,7 +467,7 @@
     function hapus_barang(id_barang){
         const id_pembelian = $('#id_pembelian').val();
         $.ajax({
-            url : '<?= '/adm/pembelian/tambah_barang' ?>',
+            url : '<?= asset('/adm/pembelian/tambah_barang') ?>',
             data : {
                 id_pembelian : id_pembelian,
                 id_barang : id_barang,

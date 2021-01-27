@@ -104,21 +104,26 @@
 							</div>
 						</td>
 						<td>
-							<div>
+							<!-- <div>
 								Kode Pelanggan : {{$all_penjualan[0]['id_toko_pelanggan']}}
+							</div> -->
+							<div>
+								Nama Toko : {{$nama_toko[0]['nama_toko_pelanggan']}}
 							</div>
 							<div>
-								Nama Pelanggan : {{$nama_toko[0]['nama_toko_pelanggan']}}
+								Alamat Toko : {{$all_penjualan[0]['alamat_toko_pelanggan']}}
 							</div>
-						
 						</td>
 						<td style="text-align:right;">
 							<div>
 								Tanggal : {{$all_penjualan[0]['tanggal_kirim']}}
 							</div>
-								<div>
-								Alamat : {{$all_penjualan[0]['alamat_toko_pelanggan']}}
+							<div>
+								Disc :  {{$all_penjualan[0]['diskon']."%"}}
 							</div>
+							<!-- <div>
+								Alamat : {{$all_penjualan[0]['alamat_toko_pelanggan']}}
+							</div> -->
 						</td>
 					</tr>
 				</table>
@@ -161,20 +166,20 @@
 			<div class="mt-1">
 				<table class="table">
 					<tr>
-						<td style="width:70%;font-size:10px;">
+						<td style="width:75%;font-size:10px;">
 							<font> CATATAN : </font> <br>
 							<font> 1. Barang yang sudah dibeli tidak dapat dikembalikan kecuali dengan perjanjian  </font> <br>
 							<font> 2. Pembayaran melalu transfer/cek/giro dianggap lunas jika sudah memasuki rekening kami </font>
 						</td>
-						<td style="text-align:right;font-size:10px;">
-							<table class="text-right">
+						<td style="float:right;font-size:10px;">
+							<table>
 								<tr>
 									<th class="text-right"> SUB JUMLAH </th>
 									<th class="text-right"> : {{ "Rp.".number_format($subtotal,0,',','.')}} </th>
 								</tr>
 								<tr>
 									<th class="text-right"> DISC </th>
-									<th class="text-right"> : {{ "Rp.".number_format((($subtotal*$all_penjualan[0]['diskon'])/100),0,',','.')}} ({{$all_penjualan[0]['diskon']."%"}}) </th>
+									<th class="text-right"> : {{ "Rp.".number_format((($subtotal*$all_penjualan[0]['diskon'])/100),0,',','.')}}  </th>
 								</tr>
 								<tr>
 									<th class="text-right"> TOTAL </th>
@@ -192,7 +197,7 @@
 						<td class="text-center">
 							<div class="center w-50">
 								<div>
-									<font><b> PENERIMA </b></font>
+									<font><b> Penerima </b></font>
 								</div>
 								<div class="signature">
 
@@ -264,11 +269,14 @@
 							</div>
 						</td>
 						<td>
-							<div>
+							<!-- <div>
 								Kode Pelanggan : {{$all_penjualan[0]['id_toko_pelanggan']}}
+							</div> -->
+							<div>
+								Nama Toko : {{$nama_toko[0]['nama_toko_pelanggan']}}
 							</div>
 							<div>
-								Nama Pelanggan : {{$nama_toko[0]['nama_toko_pelanggan']}}
+								Alamat Toko : {{$all_penjualan[0]['alamat_toko_pelanggan']}}
 							</div>
 						
 						</td>
@@ -276,9 +284,12 @@
 							<div>
 								Tanggal : {{$all_penjualan[0]['tanggal_kirim']}}
 							</div>
-								<div>
-								Alamat : {{$all_penjualan[0]['alamat_toko_pelanggan']}}
+							<div>
+								Disc :  {{$all_penjualan[0]['diskon']."%"}}
 							</div>
+							<!-- <div>
+								Alamat : {{$all_penjualan[0]['alamat_toko_pelanggan']}}
+							</div> -->
 						</td>
 					</tr>
 				</table>
@@ -321,12 +332,12 @@
 			<div class="mt-1">
 				<table class="table">
 					<tr>
-						<td style="width:70%;font-size:10px;">
+						<td style="width:75%;font-size:10px;">
 							<font> CATATAN : </font> <br>
 							<font> 1. Barang yang sudah dibeli tidak dapat dikembalikan kecuali dengan perjanjian  </font> <br>
 							<font> 2. Pembayaran melalu transfer/cek/giro dianggap lunas jika sudah memasuki rekening kami </font>
 						</td>
-						<td style="text-align:right;font-size:10px;">
+						<td style="float:right;font-size:10px;">
 							<table>
 								<tr>
 									<th class="text-right"> SUB JUMLAH </th>
@@ -334,7 +345,7 @@
 								</tr>
 								<tr>
 									<th class="text-right"> DISC </th>
-									<th class="text-right"> : {{ "Rp.".number_format((($subtotal*$all_penjualan[0]['diskon'])/100),0,',','.')}} ({{$all_penjualan[0]['diskon']."%"}}) </th>
+									<th class="text-right"> : {{ "Rp.".number_format((($subtotal*$all_penjualan[0]['diskon'])/100),0,',','.')}} </th>
 								</tr>
 								<tr>
 									<th class="text-right"> TOTAL </th>
@@ -352,7 +363,7 @@
 						<td class="text-center">
 							<div class="center w-50">
 								<div>
-									<font><b> PENERIMA </b></font>
+									<font><b> Penerima </b></font>
 								</div>
 								<div class="signature">
 

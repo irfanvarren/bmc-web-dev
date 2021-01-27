@@ -1,3 +1,4 @@
+<!-- Create Modal -->
 <div class="modal" tabindex="-1" role="dialog" id="stockModal">
   <div class="modal-dialog  modal-xl" role="document" >
     <div class="modal-content">
@@ -49,7 +50,13 @@
                                 <label for="id_barang">Jenis Barang</label>
                             </div>
                             <div class="col-xl-8">
-                                <input type="text" class="form-control" id="jenis_barang" name="jenis_barang" placeholder="Jenis Barang">
+                                <select name="jenis_barang" id="jenis_barang" class="form-control">
+                                    <option value="-"> --- PILIH --- </option>
+                                    @foreach($all_jenis as $aj)
+                                        <option value="{{$aj->jenis_barang}}"> {{$aj->jenis_barang}}</option>
+                                    @endforeach
+                                </select>
+                                
                             </div>
                         </div>
                     </div>
@@ -195,4 +202,81 @@
       </form>
     </div>
   </div>
+</div>
+<!-- Category Modal -->
+<div class="modal" tabindex="-1" role="dialog" id="jenisModal">
+  <div class="modal-dialog l" role="document" >
+    <div class="modal-content">
+        <form action="{{asset('/adm/jenis-barang')}}"  method="POST">
+        @csrf
+            <div class="modal-header">
+                <h5 class="modal-title"><i class="fas fa-plus-circle"></i> Tambah Jenis Barang </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">     
+                <div class="row form-group">
+                    <div class="col-xl-12">
+                        <div class="row ">
+                            <div class="col-xl-4">
+                                <label for="id_jenis_barang">Id Jenis Barang</label>
+                            </div>
+                            <div class="col-xl-8">
+                                <input type="text" class="form-control" value="{{$data}}" readonly id="id_jenis_barang" name="id_jenis_barang" placeholder="Id Barang">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-12 pt-2">
+                        <div class="row ">
+                            <div class="col-xl-4">
+                                <label for="jenis_barang">Jenis Barang</label>
+                            </div>
+                            <div class="col-xl-8">
+                                <input type="text" class="form-control" id="jenis_barang" name="jenis_barang" placeholder="Jenis Barang">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" type="submit"> <i class="fas fa-save"></i> Simpan Data</button>
+            </div>
+        </form>
+    </div>
+  </div>
+</div>
+<!-- View Data -->
+<div class="modal" tabindex="-1" role="dialog" id="viewjenisModal">
+    <div class="modal-dialog l" role="document" >
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"> <i class="fas fa-box-open h3"></i> Jenis Barang </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">     
+                <div class="row form-group">
+                   <div class="container table-responsive">
+                        <table class="table table-bordered">
+                            <tr>
+                                <th> ID Jenis Barang </th>
+                                <th> Jenis Barang </th>
+                            </tr>
+                            @foreach($all_jenis as $aj)
+                                <tr>
+                                    <td> {{$aj->id_jenis}} </td>
+                                    <td> {{$aj->jenis_barang}} </td>
+                                </tr>
+                            @endforeach
+                        </table>
+                   </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal"> <i class="fas fa-times-circle"></i> Close</button>
+            </div>
+        </div>
+    </div>
 </div>

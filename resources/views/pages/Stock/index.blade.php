@@ -17,9 +17,15 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-12"> <hr>
-                    <div class="text-left">
-                        <a class="btn btn-primary" href="javascript:void(0)" data-toggle="modal" data-target="#stockModal"> <i class="fas fa-plus-circle"></i> Add </a>
+                <div class="container"> <hr>
+                    <div class="text-left float-left">
+                        <a class="btn btn-primary" href="javascript:void(0)" data-toggle="modal" data-target="#stockModal"> <i class="fas fa-plus-circle"></i> Add Item</a>
+                    </div>
+                    <div class="text-left float-left pl-3">
+                        <a class="btn btn-primary" href="javascript:void(0)" data-toggle="modal" data-target="#jenisModal"> <i class="fas fa-plus-circle"></i> Add Category</a>
+                    </div>
+                    <div class="text-left float-left pl-3">
+                        <a class="btn btn-secondary" href="javascript:void(0)" data-toggle="modal" data-target="#viewjenisModal"> <i class="far fa-eye"></i> View Category</a>
                     </div>
                 </div>
                 <div class="container">
@@ -49,7 +55,7 @@
                                     <form action="{{route('stock.destroy',$data)}}" method="POST">
                                         @csrf
                                         @method('DELETE')
-                                        <a href="javascript:void(0)"  data-toggle="modal" data-target="#editStockModal" class="btn btn-warning text-white" data-stock="{{$data}}" onclick="edit_data(this)"> <i class="fas fa-pencil-alt"></i> </a> 
+                                        <a href="javascript:void(0)" data-toggle="modal" data-target="#editStockModal" class="btn btn-warning text-white" data-stock="{{$data}}" onclick="edit_data(this)"> <i class="fas fa-pencil-alt"></i> </a> 
                                         <button class="btn btn-danger" onclick="hapus(event,this)"> <i class="fas fa-trash-alt"></i> </button>
                                     </form>
                                 </td>
@@ -73,7 +79,6 @@ Swal.fire({
     timer: 1500
   })
 @endif
-
     function edit_data(e){
         var data = JSON.parse(e.dataset.stock);
         console.log(data);

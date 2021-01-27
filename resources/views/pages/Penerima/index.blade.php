@@ -16,7 +16,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-12"> <hr>
+                <div class="container"> <hr>
                     <div class="text-left">
                         <a class="btn btn-primary" href="javascript:void(0)"  onclick="tambah()"> <i class="fas fa-plus-circle"></i> Add </a>
                     </div>
@@ -102,23 +102,6 @@ Swal.fire({
             }).then((result) => {
             if (result.isConfirmed) {
                 $(btn).parent().submit();
-                // $.ajax({
-                //     url : '<?= '/adm/toko/hapus_data' ?>',
-                //     data : {id : id_toko},
-                //     method : 'POST',
-                //     headers: {
-                //         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                //     },
-                //     dataType : 'JSON',
-                //     success:function(){
-                //         swalWithBootstrapButtons.fire(
-                //         'Terhapus!',
-                //         'Data sudah terhapus',
-                //         'success',
-                //         )
-                //     }
-                // });
-                // location.href="<?= '/adm/toko' ?>";
             } else if (
                 result.dismiss === Swal.DismissReason.cancel
             ) {
@@ -138,7 +121,7 @@ Swal.fire({
             $('.modal-body form').attr('action','<?= '/adm/penerima/simpan_data' ?>');
             $('.modal-footer button[type=submit]').html('<i class="fas fa-save"></i> Simpan Data');
             $.ajax({
-                url : '<?= '/adm/penerima/ambil_id' ?>',
+                url : '<?= asset('/adm/penerima/ambil_id') ?>',
                 method : 'POST',
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -163,7 +146,7 @@ Swal.fire({
             $('.modal-body form').attr('action','<?= '/adm/penerima/edit_data' ?>');
             $('.modal-footer button[type=submit]').html('<i class="fas fa-pencil-alt"></i> Edit Toko');
             $.ajax({
-                url : '<?= '/adm/penerima/ambil_data' ?>',
+                url : '<?= asset('/adm/penerima/ambil_data') ?>',
                 data : {id_penerima : id_penerima},
                 method : 'POST',
                 headers: {

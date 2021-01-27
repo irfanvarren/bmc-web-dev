@@ -12,6 +12,7 @@ use App\Models\tempDtlPembelian;
 use App\Models\DetailPembelian;
 use App\Models\DetailReturPembelian;
 use App\Models\returPembelian;
+use App\Models\jenisBarang;
 
 
 class PembelianController extends Controller
@@ -21,25 +22,27 @@ class PembelianController extends Controller
         $all_penerima = Penerima::get();
         $all_ekspedisi = Ekspedisi::get();
         $all_pembelian = Pembelian::orderByRaw("SUBSTRING_INDEX(id_pembelian, '/', 3);",'ASC')->get();
-		$row = $all_pembelian->count();
-		if($row == 0){
-		    $row = 1;
+        $row = $all_pembelian->count();
+        if($row == 0){
+            $row = 1;
         }else{ 
-			$id_pembelian = $all_pembelian[$row-1]->id_pembelian;
-			$pisah = explode('/',$id_pembelian);
-			$row = $pisah[3] + 1;
-		}
+            $id_pembelian = $all_pembelian[$row-1]->id_pembelian;
+            $pisah = explode('/',$id_pembelian);
+            $row = $pisah[3] + 1;
+        }
         $date = date('m/Y');
         $split = explode('/', $date);
         $bulan = $split[0];
         $tahun = $split[1];
+        $all_jenis = jenisBarang::get();
         $data = [
             'id_pembelian' => $id_pembelian = "PEM/".$bulan."/".$tahun."/".$row,
             'all_penerima' => $all_penerima,
             'all_ekspedisi' => $all_ekspedisi,
-            'all_stock' => $all_stock
+            'all_stock' => $all_stock,
+            'all_jenis' => $all_jenis
         ];
-        //$detail_pembelian = DetailPembelian::where('id_pembelian',$id_pembelian);
+                //$detail_pembelian = DetailPembelian::where('id_pembelian',$id_pembelian);
         return view('pages.Pembelian.index',$data);
     }
 
@@ -48,7 +51,7 @@ class PembelianController extends Controller
         return view('pages.Pembelian.nota',['all_pembelian' => $all_pembelian]);
     }
     public function simpan_nota(Request $req){
-        
+
         $id_pembelian = $req->input('id_pembelian');
         $tanggal_order = $req->input('tanggal_order');
         $nama_toko = $req->input('nama_toko');
@@ -157,7 +160,7 @@ class PembelianController extends Controller
             'all_temp_dtl_pembelian' => $all_temp,
             'subtotal' => $subtotal[0]->total_harga
         ];
-		return view('pages.Pembelian.detail',$data);
+        return view('pages.Pembelian.detail',$data);
     }
     public function edit_nota($id_pembelian){
         $all_pembelian = Pembelian::where('id_pembelian',urldecode($id_pembelian))->get();
@@ -197,7 +200,7 @@ class PembelianController extends Controller
             'icon' => '',
         ];
         return view('pages.pembelian.nota-edited-info',$data);
-		
+
     }
     public function nota_info($id_pembelian){
         $all_pembelian = Pembelian::where('id_pembelian',urldecode($id_pembelian))->get();
@@ -209,6 +212,12 @@ class PembelianController extends Controller
             'all_detail_pembelian' => $all_detail_pembelian,
         ];
         return view('pages.pembelian.nota-info',$data);  
+    }
+    public function hapus_nota($id_pembelian){
+        $id_pembelian = urldecode($id_pembelian);
+        Pembelian::where('id_pembelian',$id_pembelian)->delete();
+        DetailPembelian::where('id_pembelian',$id_pembelian)->delete();
+        return redirect('adm/nota-pembelian')->with(["status"=>"Nota berhasil dihapus", "judul_alert" => "Hapus" , "icon" => "success"]);
     }
     public function ubah_tanggal(){
         Pembelian::where('id_pembelian', $_POST['id_pembelian'])->update([
@@ -225,7 +234,7 @@ class PembelianController extends Controller
         echo json_encode($tanggal_terima[0]['tanggal_terima']);
     }
     public function retur_nota(Request $request,$id_pembelian){
-		$id_pembelian = urldecode($id_pembelian);	
+        $id_pembelian = urldecode($id_pembelian);	
         $id_barang = $request->id_barang;
         $all_retur_pembelian = DetailReturPembelian::get();
         $all_pembelian = Pembelian::get();
@@ -236,7 +245,7 @@ class PembelianController extends Controller
         foreach($detail_pembelian as $d_p){
             array_push($id_barang_ada,$d_p->id_barang);
             array_push($barang_sudah_ada,$d_p->nama_barang);
-        
+
             DetailReturPembelian::insert([
                 'id_retur' => $id_pembelian,
                 'id_barang' => $d_p->id_barang,
@@ -246,7 +255,10 @@ class PembelianController extends Controller
                 'jenis_retur' => "-"
             ]);        
         }
-		return redirect('adm/nota-pembelian/retur/'.urlencode(urlencode($id_pembelian)));
+        return redirect('adm/nota-pembelian/retur/'.urlencode(urlencode($id_pembelian)));
+    }
+    public function edit_retur(){
+
     }
     public function view_retur($id_pembelian){
         $id_pembelian = urldecode($id_pembelian);	
@@ -258,7 +270,7 @@ class PembelianController extends Controller
             'all_retur_pembelian' => $all_retur_pembelian,
             'all_pembelian' => $all_pembelian
         ];
-		return view('pages.Retur.detailPembelian',$data);
+        return view('pages.Retur.detailPembelian',$data);
     }
     public function view(){
         $id_pembelian = $_POST['id_pembelian'];
@@ -280,16 +292,15 @@ class PembelianController extends Controller
                 </tr>
             ";
         }
-        echo "
-            <tr>
-                <th colspan='5'> ".$jumlah_item." Items  </th>
-                <th> ".number_format($total_harga,0,',','.')." </th> 
-            </tr>
-        ";
+            echo "
+                <tr>
+                    <th colspan='5'> ".$jumlah_item." Items  </th>
+                    <th> ".number_format($total_harga,0,',','.')." </th> 
+                </tr>
+            ";
         echo "###".json_encode($data_pembelian);
     }
     public function simpan_retur(){ 
-
         $status = $_POST['status'];
         $id_pembelian = $_POST['id_pembelian'];
         $jenis_retur = $_POST['jenis_retur'];
@@ -298,13 +309,13 @@ class PembelianController extends Controller
         if($status == "Setuju"){
             $all_retur = returPembelian::orderByRaw("SUBSTRING_INDEX(id_retur, '/', 3);",'ASC')->get();
             $row = $all_retur->count();
-                if($row == 0){
-                    $row = 1;
-                }else{ 
-                    $id = $all_retur[$row-1]->id_retur;
-                    $pisah = explode('/',$id);
-                    $row = $pisah[3] + 1;
-                }
+            if($row == 0){
+                $row = 1;
+            }else{ 
+                $id = $all_retur[$row-1]->id_retur;
+                $pisah = explode('/',$id);
+                $row = $pisah[3] + 1;
+            }
             $date = date('m/Y');
             $split = explode('/', $date);
             $bulan = $split[0];
@@ -321,13 +332,13 @@ class PembelianController extends Controller
                     $stock_barang_db = Stock::select('stock_barang')->where('id_barang',$id_barang)->get();
                     $stock_temp = DetailReturPembelian::select('jumlah_barang')->where('id_retur', $id_pembelian)->where('id_barang',$id_barang)->get();
                     $new_stock = $stock_barang_db[0]['stock_barang'] - $stock_temp[0]['jumlah_barang'];
-                   
+
                     Stock::where('id_barang',$id_barang)->update(['stock_barang' => $new_stock]);
                 }
             }
-            
+
             /*update jenis retur di detail retur*/
-            
+
             Pembelian::where('id_pembelian',$id_pembelian)->update(['status' => 'Retur']);
             $split_tanggal = explode('/',$tanggal_retur);
             $new_tanggal_retur = $split_tanggal[2].'-'.$split_tanggal[1].'-'.$split_tanggal[0];
@@ -339,7 +350,7 @@ class PembelianController extends Controller
                 'tanggal_retur' => $new_tanggal_retur,
                 'tanggal_perpanjang' => NULL
             ]);
-            
+
         }else if($status == "Batal"){
             DetailReturPembelian::where('id_retur', $id_pembelian)->delete();
         }
@@ -366,47 +377,78 @@ class PembelianController extends Controller
             $pembelian = $pembelian->where('tanggal_terima','like','%'.$tanggal_terima.'%');
         }
         $pembelian = $pembelian->get();
-		$hasil = "";
-		if(count($pembelian)){
-			foreach($pembelian as $key => $ap){
+        $hasil = "";
+        if(count($pembelian)){
+            foreach($pembelian as $key => $ap){
                 if($ap->tanggal_terima == NULL){
                     $tanggal = "-";
                 }else{
                     $tanggal = $ap->tanggal_terima;
                 }
-				$hasil .= '
-					<tr> 
-						<td> '.$ap->id_pembelian.' </td>
-						<td> '.$ap->tanggal_order.' </td>
-						<td> '.$tanggal.' </td>
-						<td> '.$ap->nama_toko.' </td>
-						<td> '.$ap->metode_pembayaran.' </td>
-						<td> '.number_format($ap->total_harga,0,',','.').'</td>	
-						<td> '.number_format(($ap->total_harga+$ap->ongkir)-$ap->potongan_harga,0,',','.').' </td>
-						<td>
-							<a href="'.asset('/adm/nota-pembelian/edited').'/'.urlencode(urlencode($ap->id_pembelian)).'" class="float-left btn btn-warning ml-1 text-white"> <i class="fas fa-pencil-alt"></i> </a>
-							<a href="" class="float-left btn btn-danger ml-1"> <i class="fas fa-trash-alt"></i> </a>
-							<a href="'.asset('/adm/nota-pembelian').'/'.urlencode(urlencode($ap->id_pembelian)).'" class="float-left btn btn-primary ml-1"> <i class="fas fa-info-circle"></i> </a>
-						</td>
-					</tr>
-					';
-				}
-		}else{
-			$hasil .="
-				<tr>
-					<th colspan='8'> Tidak Ada Data  </th>
-				</tr>
-			";
-		}
-		echo $hasil;
+                $hasil .= '
+                    <tr> 
+                        <td> '.$ap->id_pembelian.' </td>
+                        <td> '.$ap->tanggal_order.' </td>
+                        <td> '.$tanggal.' </td>
+                        <td> '.$ap->nama_toko.' </td>
+                        <td> '.$ap->metode_pembayaran.' </td>
+                        <td> '.number_format($ap->total_harga,0,',','.').'</td>	
+                        <td> '.number_format(($ap->total_harga+$ap->ongkir)-$ap->potongan_harga,0,',','.').' </td>
+                        <td>
+                            <a href="'.asset('/adm/nota-pembelian/edited').'/'.urlencode(urlencode($ap->id_pembelian)).'" class="float-left btn btn-warning ml-1 text-white"> <i class="fas fa-pencil-alt"></i> </a>
+                            <button onclick="hapus('."'".urlencode(urlencode($ap->id_pembelian))."'".')" class="float-left btn btn-danger ml-1"> <i class="fas fa-trash-alt"></i> </button>
+                            <a href="'.asset('/adm/nota-pembelian').'/'.urlencode(urlencode($ap->id_pembelian)).'" class="float-left btn btn-primary ml-1"> <i class="fas fa-info-circle"></i> </a>
+                        </td>
+                    </tr>
+                ';
+            }
+        }else{
+            $hasil .="
+                <tr>
+                    <th colspan='8'> Tidak Ada Data  </th>
+                </tr>
+            ";
+        }
+        echo $hasil;
     }
 
     public function retur_pembelian(){
-        $all_retur_pembelian = returPembelian::get();
+        $all_retur_pembelian = returPembelian::join('tb_pembelian','tb_pembelian.id_pembelian','retur_pembelian.id_pembelian')->get();
         $data = [
             'title' => 'BMC | Retur Pembelian',
             'all_retur_pembelian' => $all_retur_pembelian
         ];
         return view('pages.Retur.returPembelian',$data);
+    }
+
+    public function hapus_retur($id_retur){
+        $id_retur = urldecode($id_retur);
+        returPembelian::where('id_retur',$id_retur)->delete();
+        DetailReturPembelian::where('id_retur',$id_retur)->delete();
+
+        return redirect('adm/retur-pembelian')->with(["status"=>"Retur berhasil dihapus", "judul_alert" => "Hapus" , "icon" => "success"]);
+    }
+
+    public function perpanjang_retur($id_retur,Request $request){
+        $id_retur = urldecode($id_retur);
+        $retur_pembelian = returPembelian::find($id_retur);
+        if($retur_pembelian->tanggal_perpanjang != ""){
+            $tanggal_perpanjang =  date_create($retur_pembelian->tanggal_perpanjang);
+        }else{
+            $tanggal_perpanjang =  date_create($retur_pembelian->tanggal_retur);
+        }
+        $tanggal_max = date_create($retur_pembelian->tanggal_retur);
+        date_add($tanggal_max,date_interval_create_from_date_string('9 days'));
+        date_add($tanggal_perpanjang , date_interval_create_from_date_string('3 days'));
+        $tanggal_perpanjang = date_format($tanggal_perpanjang, "Y-m-d");
+        $tanggal_max = date_format($tanggal_max, "Y-m-d");
+ 
+        if($tanggal_perpanjang <= $tanggal_max){
+            $retur_pembelian->tanggal_perpanjang = $tanggal_perpanjang;
+            $retur_pembelian->save();   
+            return redirect('adm/retur-pembelian')->with(["status"=>"Retur berhasil diperpanjang", "judul_alert" => "Perpanjangan Retur" , "icon" => "success"]);
+        }else{
+            return redirect('adm/retur-pembelian')->with(["status"=>"Maximal retur hanya 3 kali", "judul_alert" => "Gagal Perpanjangan Retur" , "icon" => "error"]);
+        }
     }
 }

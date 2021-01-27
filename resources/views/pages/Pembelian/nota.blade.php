@@ -172,7 +172,7 @@
         });
     }
     
-    function hapus(id_penjualan){
+    function hapus(id_pembelian){
         Swal.fire({
             title: 'Peringatan',
             text: "Data akan terhapus secara permanen",
@@ -184,7 +184,7 @@
             cancelButtonText : 'Batal'
             }).then((result) => {
             if (result.isConfirmed) {
-                location.href="<?= '/adm/nota-penjualan/delete/' ?>"+id_penjualan;
+                location.href="<?= url('/adm/nota-pembelian/') ?>/"+id_pembelian+"/delete";
             }
         })
     }

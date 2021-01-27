@@ -180,7 +180,7 @@
             cancelButtonText : 'Batal'
             }).then((result) => {
             if (result.isConfirmed) {
-                location.href="<?= '/adm/nota-penjualan/delete/' ?>"+id_penjualan;
+                location.href="<?= url('/adm/nota-penjualan/') ?>/"+id_penjualan+"/delete";
             }
         })
     }

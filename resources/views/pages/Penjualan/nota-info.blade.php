@@ -24,7 +24,7 @@
                             </form>
                         </div>
                         <div class="col-lg-4 float-left text-right">
-                            <form action="/adm/nota-penjualan/cetak_nota" method="POST">
+                            <form action="{{url('/adm/nota-penjualan/cetak_nota')}}" method="POST">
                                 @csrf
                                 <input type="hidden" name="id_penjualan" value="{{$id_penjualan}}">
                                 <button class="btn btn-warning text-white" type="submit" > <i class="fas fa-print"></i> Print Nota </a>
@@ -141,7 +141,7 @@
                 <div class="container pt-5 pb-4">
                     <center>
                         <div class="col-lg-6 float-left">
-                            <font><b> PENERIMA </b></font><br><br><br><br>
+                            <font><b> Penerima </b></font><br><br><br><br>
                             <font>{{$nama_toko[0]['nama_toko_pelanggan']}}</font><br>
                             <font>_______________________</font>
                         </div>

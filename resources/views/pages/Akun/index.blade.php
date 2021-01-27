@@ -16,7 +16,7 @@
                         <font class="pl-3 mb-3 h3"> Akun  </font> 
                     </div>
                 </div>
-                <div class="col-lg-12"> <hr>
+                <div class="container"> <hr>
                     <div class="text-left">
                         <a class="btn btn-primary"  href="javascript:void(0)" data-toggle="modal" data-target="#akunModal"> <i class="fas fa-plus-circle"></i> Add </a>
                     </div>

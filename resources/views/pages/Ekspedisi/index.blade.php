@@ -17,7 +17,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-12"> <hr>
+                <div class="container"> <hr>
                     <div class="text-left">
                         <a class="btn btn-primary" href="javascript:void(0)" onclick="tambah()"> <i class="fas fa-plus-circle"></i> Add </a>
                     </div>
@@ -93,23 +93,6 @@ Swal.fire({
             }).then((result) => {
             if (result.isConfirmed) {
                 $(btn).parent().submit();
-                // $.ajax({
-                //     url : '<?= '/adm/ekspedisi/hapus_data' ?>',
-                //     data : {id : id_ekspedisi},
-                //     method : 'POST',
-                //     headers: {
-                //         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                //     },
-                //     dataType : 'JSON',
-                //     success:function(data){
-                //         swalWithBootstrapButtons.fire(
-                //         'Terhapus!',
-                //         'Data sudah terhapus.',
-                //         'success',
-                //         )
-                //     }
-                // });
-                // window.location.redirect="<?= '/adm/ekspedisi' ?>";
             } else if (
                 result.dismiss === Swal.DismissReason.cancel
             ) {
@@ -129,7 +112,7 @@ Swal.fire({
             $('.modal-body form').attr('action','<?= '/adm/ekspedisi/simpan_data' ?>');
             $('.modal-footer button[type=submit]').html('<i class="fas fa-plus-circle"></i> Simpan Data');
             $.ajax({
-                url : '<?= '/adm/ekspedisi/ambil_id' ?>',
+                url : '<?= asset('/adm/ekspedisi/ambil_id') ?>',
                 method : 'POST',
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -151,7 +134,7 @@ Swal.fire({
             $('.modal-body form').attr('action','<?= '/adm/ekspedisi/edit_data' ?>');
             $('.modal-footer button[type=submit]').html('<i class="fas fa-pencil-alt"></i> Edit Data');
             $.ajax({
-                url : '<?= '/adm/ekspedisi/ambil_data' ?>',
+                url : '<?= asset('/adm/ekspedisi/ambil_data') ?>',
                 data : {id_ekspedisi : id_ekspedisi},
                 method : 'POST',
                 headers: {

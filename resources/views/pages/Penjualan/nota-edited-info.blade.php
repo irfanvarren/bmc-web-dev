@@ -206,9 +206,9 @@
             cancelButtonText : 'Tidak, kembali ke Nota'
         }).then((result) => {
             if (result.isConfirmed) {
-                location.href="/adm/nota-penjualan";
+                location.href="{{asset('/adm/nota-penjualan')}}";
             }else{
-                location.href="/adm/penjualan";
+                location.href="{{asset('/adm/penjualan')}}";
             }
         })
     @endif

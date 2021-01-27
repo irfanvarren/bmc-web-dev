@@ -11,7 +11,7 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="container">
-                        <form action="/adm/toko/simpan_data" method="POST">
+                        <form action="{{url('/adm/toko/simpan_data')}}" method="POST">
                             @csrf
                             <div class="row form-group">
                                 <div class="col-xl-6">

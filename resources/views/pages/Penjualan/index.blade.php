@@ -157,18 +157,36 @@
                                     <div class="py-3">
                                         <div class="p-3 pt-4 position-relative"  style="border:1px solid black;">
                                             <span style="position:absolute;top:-12.5px ;left:15px;height:25px;background:white;padding:0 8px;">Keranjang Jual</span>
-                                            <div class="d-flex mb-3 detail-input" id="detail-input">
-                                                <input type="text" class="form-control mx-3" readonly name="dtlid_barang" id="dtlid_barang" placeholder="ID Barang">
-                                                <select class="js-example-basic-single mx-3" id="dtlnama_barang" name="dtlnama_barang" >
+                                            <div class="row mb-3 detail-input" id="detail-input">
+                                                <div class="col-md-2">
+                                                     <input type="text" class="form-control mx-3" readonly name="dtlid_barang" id="dtlid_barang" placeholder="ID Barang">
+                                                </div>
+                                                <div class="col-md-2 ">
+                                                      <select class="js-example-basic-single mx-3" id="dtlnama_barang" name="dtlnama_barang" >
                                                     <option value="-"> --- Pilih --- </option>
                                                     @foreach($all_stock as $as)
                                                     <option value="{{$as->id_barang}}" data-name="{{$as->nama_barang}}"> {{$as->nama_barang}} </option>
                                                     @endforeach
                                                 </select>
-                                                <input type="text" class="form-control mx-3" name="dtlharga_barang" id="dtlharga_barang" placeholder="Harga Barang">
-                                                <input type="text" class="form-control mx-3" value="0" min="0" max="100" name="dtldiskon" id="dtldiskon" placeholder="Diskon">
-                                                <input type="text" class="form-control mx-3" min="1" name="dtljumlah" id="dtljumlah" placeholder="Jumlah">
-                                                <button class="btn btn-primary w-100 ml-2" id="dtltambah" value="add" type="button"> <i class="fa fa-plus"></i>  Tambah</button>
+                                                </div>
+                                                <div class="col-md-2">
+                                                      <input type="text" class="form-control mx-3" name="dtlharga_barang" id="dtlharga_barang" placeholder="Harga Barang">
+                                                </div>
+                                                <div class="col-md-2">
+                                                       <input type="text" class="form-control mx-3" value="0" min="0" max="100" name="dtldiskon" id="dtldiskon" placeholder="Diskon">
+                                                </div>
+                                                <div class="col-md-2">
+                                                     <input type="text" class="form-control mx-3" min="1" name="dtljumlah" id="dtljumlah" placeholder="Jumlah">
+                                                </div>
+                                                <div class="col-md-2">
+                                                      <button class="btn btn-primary w-100 ml-2" id="dtltambah" value="add" type="button"> <i class="fa fa-plus"></i>  Tambah</button>
+                                                </div>
+                                               
+                                              
+                                              
+                                             
+                                               
+                                              
                                             </div>
                                             <div style="width:100%;overflow:auto" id="output-detail">
 
@@ -297,7 +315,7 @@
     $(document).ready(function(){
         const id_penjualan = $('#id_penjualan').val();
         $.ajax({
-            url : '<?= '/adm/penjualan/items' ?>',
+            url : '<?= asset('/adm/penjualan/items') ?>',
             data : {
                 id_penjualan : id_penjualan,
             },
@@ -336,7 +354,7 @@
         $('#dtlnama_barang').change(function(){
             const dtlid_barang = $('#dtlnama_barang').val();
             $.ajax({
-                url : '<?= '/adm/penjualan/detail_barang' ?>',
+                url : '<?= asset('/adm/penjualan/detail_barang') ?>',
                 data : {id_barang : dtlid_barang},
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -355,7 +373,7 @@
         $('#nama_toko').change(function(){
             const id_toko = $('#nama_toko').val();
             $.ajax({
-                url:'<?= '/adm/penjualan/cek_id' ?>',
+                url:'<?= asset('/adm/penjualan/cek_id') ?>',
                 data : {
                     id_toko : id_toko
                 },
@@ -413,7 +431,7 @@
                 })
             }
             $.ajax({
-                url : '<?= '/adm/penjualan/items' ?>',
+                url : '<?= asset('/adm/penjualan/items') ?>',
                 data : {
                     id_penjualan : id_penjualan,
                     id_barang : id_barang,
@@ -470,7 +488,7 @@
     function hapus_barang(id_barang){
         const id_penjualan = $('#id_penjualan').val();
         $.ajax({
-            url : '<?= '/adm/penjualan/items' ?>',
+            url : '<?= asset('/adm/penjualan/items') ?>',
             data : {
                 id_penjualan : id_penjualan,
                 id_barang : id_barang,

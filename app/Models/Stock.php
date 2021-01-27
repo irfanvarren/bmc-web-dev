@@ -12,6 +12,6 @@ class Stock extends Model
     public $incrementing = false;
     public $primaryKey = "id_barang";
     public $fillable = [
-        'id_barang','nama_barang','stock_barang','jenis_barang','satuan','harga_minimal','harga_maximal'
+        'id_barang','nama_barang','stock_barang','jenis_barang','harga_minimal','harga_maximal','pembelian_ke','satuan'
     ];
 }

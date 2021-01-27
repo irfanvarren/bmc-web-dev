@@ -66,7 +66,7 @@
                 <font class="h5 pl-2"> Stock </font>
             </div>
         </a>
-        <a class="row d-block bg-blue-gray cr-pointer shadow" href="{{'/adm/ekspedisi'}}">
+        <a class="row d-block bg-blue-gray cr-pointer shadow" href="{{asset('/adm/ekspedisi')}}">
             <div class="p-3">
                 <i class="fas fa-dolly-flatbed h5"></i>
                 <font class="h5 pl-2"> Ekspedisi </font>
@@ -90,12 +90,16 @@
                 <font class="h5 pl-2"> Profile </font>
             </div>
         </a>
+        @auth
+        @if(auth()->user()->level == "Super Admin")
         <a class="row bg-blue-gray cr-pointer shadow" href="{{asset('/adm/akun')}}">
             <div class="p-3">
                 <i class="fas fa-user-plus h5"></i>
                 <font class="h5 pl-2"> Akun </font>
             </div>
         </a>
+        @endif
+        @endauth
         <div class="row bg-blue-gray cr-pointer shadow">
             <div class="p-3">
                 <i class="fas fa-sign-out-alt h5"></i>

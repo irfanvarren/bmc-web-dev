@@ -46,7 +46,7 @@
                                         <td> 00 </td>
                                         <td>
                                             <a href="#" class="float-left btn btn-warning ml-1 text-white"> <i class="fas fa-pencil-alt"></i> </a>
-                                            <a href="" class="float-left btn btn-danger ml-1"> <i class="fas fa-trash-alt"></i> </a>
+                                            <button onclick="hapus('{{urlencode(urlencode($arp->id_retur))}}')" class="float-left btn btn-danger ml-1"> <i class="fas fa-trash-alt"></i> </button>
                                             <a href="javascript:void(0)" onclick="detail('{{$arp->id_penjualan}}')" class="float-left btn btn-primary ml-1"> <i class="fas fa-info-circle"></i> </a>
                                         </td>
                                     </tr>
@@ -63,6 +63,14 @@
 @endsection
 @push('js')
 <script>
+        @if(session()->has('status'))
+    Swal.fire({
+        icon: '{{session()->has("icon") ? session("icon") : "success"}}',
+        title: '{{session("judul_alert")}}\n{{session("status")}}',
+        showConfirmButton: false,
+        timer: 1500
+    })
+@endif
     function detail(id_penjualan){
         $('#penjualanModal').modal('show');
         $.ajax({
@@ -81,17 +89,32 @@
                 $('.isi_retur').html(data_arr[0]);
 
                 console.log(data_retur);
-                $('.info-retur #id-transaksi').html(data_retur.id_pembelian);
+                $('.info-retur #id-transaksi').html(data_retur.id_penjualan);
                 $('.info-retur #metode-pembayaran').html(data_retur.metode_pembayaran);
                 $('.info-retur #tanggal-order').html(data_retur.tanggal_order);
                 $('.info-retur #nama-toko').html(data_retur.nama_toko_pelanggan);
                 $('.info-retur #alamat-toko').html(data_retur.alamat_toko_pelanggan);
                 $('.info-retur #kode_toko').html(data_retur.id_toko_pelanggan);
-                $('.info-retur #username').html(data_retur.username);
                 $('.info-retur #penanggung_jawab').html(data_retur.penanggung_jawab);
                 $('.info-retur #no-hp-penerima').html(data_retur.no_hp);
             }
         });
+    }
+    function hapus(id_penjualan){
+        Swal.fire({
+            title: 'Peringatan',
+            text: "Data akan terhapus secara permanen",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya, hapus!',
+            cancelButtonText : 'Batal'
+            }).then((result) => {
+            if (result.isConfirmed) {
+                location.href="<?= url('/adm/retur-penjualan/') ?>/"+id_penjualan+"/delete";
+            }
+        })
     }
 </script>
 @endpush

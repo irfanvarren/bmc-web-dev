@@ -54,10 +54,6 @@
                                 <td> No. HP Penerima </td>
                                 <td> : <span id="no-hp-penerima"></span>  </td>
                             </tr>
-                            <tr style="font-size: 14px;">
-                                <td> Username </td>
-                                <td> : <span id="username"></span>  </td>
-                            </tr>
                         </table>
                     </div>
                     </div>

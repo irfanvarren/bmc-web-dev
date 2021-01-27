@@ -72,6 +72,7 @@ class PenjualanController extends Controller
 	}
 	public function hapus_nota($id_penjualan){
 		Penjualan::where('id_penjualan', urldecode($id_penjualan))->delete();
+		DetailPenjualan::where('id_penjualan',urldecode($id_penjualan))->delete();
 		return redirect('/adm/nota-penjualan')->with(["status"=>"Data sudah dihapus", "judul_alert" => "Berhasil" , "icon" => "success"]);
 	}
 	public function nota_info($id_penjualan){
@@ -236,7 +237,7 @@ class PenjualanController extends Controller
         $id_penjualan = $_POST['id_penjualan'];
         $all_retur_penjualan = DetailReturPenjualan::where('id_retur',$id_penjualan)->join('tb_penjualan','tb_penjualan.id_penjualan','dtlretur_penjualan.id_retur')->get();
         $data_penjualan = Penjualan::where('retur_penjualan.id_penjualan',$id_penjualan)->join('retur_penjualan','retur_penjualan.id_penjualan','tb_penjualan.id_penjualan')->join('tb_pelanggan','tb_pelanggan.id_toko_pelanggan','tb_penjualan.id_toko_pelanggan')->first();
-
+		echo $data_penjualan;
         $jumlah_item = 0; $total_harga = 0;$row=1;
         foreach($all_retur_penjualan as $key => $arp){
             $jumlah_item += $arp->jumlah_barang;
@@ -317,6 +318,13 @@ class PenjualanController extends Controller
         }
         //echo $_POST['status'];
     }
+ public function hapus_retur($id_retur){
+        $id_retur = urldecode($id_retur);
+        returPenjualan::where('id_retur',$id_retur)->delete();
+        DetailReturPenjualan::where('id_retur',$id_retur)->delete();
+
+        return redirect('adm/retur-penjualan')->with(["status"=>"Retur berhasil dihapus", "judul_alert" => "Hapus" , "icon" => "success"]);;
+    }
 	public function simpan_pdf(Request $request){
 		$id_penjualan = $request->id_penjualan;
 		$all_penjualan = Penjualan::where('id_penjualan',urldecode($id_penjualan))->get();
@@ -334,39 +342,31 @@ class PenjualanController extends Controller
 		$pdf = PDF::loadView('pages.Penjualan.nota-info-pdf', $data);
 		return $pdf->download('Invoice/'.$id_penjualan.'.pdf');		
 	}
+
+	public function preview_nota($id_penjualan){
+		$id_penjualan = urldecode($id_penjualan);
+		
+	}
 	public function cetak_nota(Request $request){
 		$id_penjualan = $request->id_penjualan;
-		$all_penjualan = Penjualan::where('id_penjualan',urldecode($id_penjualan))->get();
+		$all_penjualan = Penjualan::where('id_penjualan',$id_penjualan)->get();
 		
-		$all_detail_penjualan = DetailPenjualan::where('id_penjualan',urldecode($id_penjualan))->get()->chunk(10);
+		$all_detail_penjualan = DetailPenjualan::where('id_penjualan',$id_penjualan)->get()->chunk(12);
 		$nama_toko = Pelanggan::where('id_toko_pelanggan',$all_penjualan[0]['id_toko_pelanggan'])->get();
 		
 		$data = [
 			'title' => 'BMC | Detail Nota',
-			'id_penjualan' => urldecode($id_penjualan),
+			'id_penjualan' => $id_penjualan,
 			'all_penjualan' => $all_penjualan,
 			'nama_toko' => $nama_toko,
 			'all_detail_penjualan' => $all_detail_penjualan,
 		];
 		$pdf = PDF::loadView('pages.Penjualan.nota-info-pdf', $data);
-		return $pdf->stream($id_penjualan.".pdf", array("Attachment" => false));
-//		return view('pages.Penjualan.nota-info-pdf', $data);
+		
+		$pdf = $pdf->output();
+		$pdf = "data:application/pdf;base64,".base64_encode($pdf);
+		return view('pages.Penjualan.nota-info-print',compact('pdf'));
 	}
-	// public function preview_nota($id_penjualan){
-	// 	$all_penjualan = Penjualan::where('id_penjualan',urldecode($id_penjualan))->get();
-	
-	// 	$all_detail_penjualan = DetailPenjualan::where('id_penjualan',urldecode($id_penjualan))->get();
-	// 	$nama_toko = Pelanggan::where('id_toko_pelanggan',$all_penjualan[0]['id_toko_pelanggan'])->get();
-	
-	// 	$data = [
-	// 		'title' => 'BMC | Detail Nota',
-	// 		'id_penjualan' => urldecode($id_penjualan),
-	// 		'all_penjualan' => $all_penjualan,
-	// 		'nama_toko' => $nama_toko,
-	// 		'all_detail_penjualan' => $all_detail_penjualan,
-	// 	];
-	// 	return view('pages.Penjualan.nota-info-pdf', $data);
-	// }
 	public function detail(Request $request){			
 		
 	}
@@ -414,7 +414,7 @@ class PenjualanController extends Controller
 					<td> '.number_format($ap->total_harga,0,',','.').' </td>
 					<td>
 						<a href="'.asset('/adm/nota-penjualan/edited').'/'.urlencode(urlencode($ap->id_penjualan)).'"  class="float-left btn btn-warning ml-1 text-white"> <i class="fas fa-pencil-alt"></i> </a>
-						<a href="javascript:void(0)" class="float-left btn btn-danger ml-1"> <i class="fas fa-trash-alt"></i> </a>
+						<button onclick="hapus('."'".urlencode(urlencode($ap->id_penjualan))."'".')" class="float-left btn btn-danger ml-1"> <i class="fas fa-trash-alt"></i> </button>
 						<a href="'.asset('/adm/nota-penjualan').'/'.urlencode(urlencode($ap->id_penjualan)).'" class="float-left btn btn-primary ml-1"> <i class="fas fa-info-circle"></i> </a>
 					</td>
 				</tr>

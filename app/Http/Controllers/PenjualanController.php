@@ -17,23 +17,17 @@ class PenjualanController extends Controller
 {
 	public function index(){
 		$all_stock = Stock::get();
-		$all_penjualan = Penjualan::orderByRaw("SUBSTRING_INDEX(id_penjualan, '/', 3)",'ASC')->get();
-		$all_pelanggan = Pelanggan::get();
-		// $all_penjualan = Penjualan::get();
 		$all_temp_dtl_penjualan = tempDtlPenjualan::get();
-		$row = $all_penjualan->count();
-		if($row == 0){
-			$row = 1;
-		}else{ 
-			$id_penjualan = $all_penjualan[$row-1]->id_penjualan;
-			$pisah = explode('/',$id_penjualan);
-			$row = $pisah[3] + 1;
-			// foreach($all_penjualan as $key => $a_pen){
-			// 	$id_penjualan = $a_pen->id_penjualan;
-			// 	$pisah = explode('/', $id_penjualan);
-			// 	$row = count($all_penjualan)+1;
-			// }    
-		}
+		$all_pelanggan = Pelanggan::get();
+		$all_penjualan = Penjualan::orderByRaw("SUBSTRING_INDEX(id_penjualan, '/', 3);",'ASC')->get();
+        $row = $all_penjualan->count();
+        if($row == 0){
+            $row = 1;
+        }else{
+            $id_penjualan = $all_penjualan[$row-1]->id_penjualan;
+            $pisah = explode('/',$id_penjualan);
+            $row = $pisah[3] + 1;
+        }
 		$date = date('m/Y');
 		$split = explode('/', $date);
 		$bulan = $split[0];

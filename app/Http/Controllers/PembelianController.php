@@ -25,7 +25,7 @@ class PembelianController extends Controller
         $row = $all_pembelian->count();
         if($row == 0){
             $row = 1;
-        }else{ 
+        }else{
             $id_pembelian = $all_pembelian[$row-1]->id_pembelian;
             $pisah = explode('/',$id_pembelian);
             $row = $pisah[3] + 1;

@@ -17,7 +17,7 @@ class PenjualanController extends Controller
 {
 	public function index(){
 		$all_stock = Stock::get();
-		$all_penjualan = Penjualan::orderByRaw("SUBSTRING_INDEX(id_penjualan, '/', 3)",'ASC')->get();
+		$all_penjualan = Penjualan::get();
 		$all_pelanggan = Pelanggan::get();
 		// $all_penjualan = Penjualan::get();
 		$all_temp_dtl_penjualan = tempDtlPenjualan::get();

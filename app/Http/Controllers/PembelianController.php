@@ -20,7 +20,7 @@ class PembelianController extends Controller
         $all_stock = Stock::get();
         $all_penerima = Penerima::get();
         $all_ekspedisi = Ekspedisi::get();
-        $all_pembelian = Pembelian::orderByRaw("SUBSTRING_INDEX(id_pembelian, '/', 3);",'ASC')->get();
+        $all_pembelian = Pembelian::get();
 		$row = $all_pembelian->count();
 		if($row == 0){
 		    $row = 1;

@@ -47,7 +47,7 @@ class PembelianController extends Controller
     }
 
     public function nota(){
-        $all_pembelian = Pembelian::orderByRaw("SUBSTRING_INDEX(id_pembelian, '/', -1)",'ASC')->get();
+        $all_pembelian = Pembelian::orderByRaw("SUBSTRING_INDEX(id_pembelian, '/', -1) ASC")->get();
         return view('pages.Pembelian.nota',['all_pembelian' => $all_pembelian]);
     }
     public function simpan_nota(Request $req){
@@ -307,7 +307,7 @@ class PembelianController extends Controller
         $jumlah_produk_retur = $_POST['jumlah_produk_retur'];
         $tanggal_retur = $_POST['tanggal_retur'];
         if($status == "Setuju"){
-            $all_retur = returPembelian::orderByRaw("SUBSTRING_INDEX(id_retur, '/', 3);",'ASC')->get();
+            $all_retur = returPembelian::orderByRaw("SUBSTRING_INDEX(id_retur, '/', 3) ASC")->get();
             $row = $all_retur->count();
             if($row == 0){
                 $row = 1;

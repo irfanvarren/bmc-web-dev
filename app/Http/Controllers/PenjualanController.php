@@ -19,7 +19,7 @@ class PenjualanController extends Controller
 		$all_stock = Stock::get();
 		$all_temp_dtl_penjualan = tempDtlPenjualan::get();
 		$all_pelanggan = Pelanggan::get();
-		$all_penjualan = Penjualan::orderByRaw("SUBSTRING_INDEX(id_penjualan, '/', 3);",'ASC')->get();
+		$all_penjualan = Penjualan::orderByRaw("SUBSTRING_INDEX(id_penjualan, '/', 3) ASC")->get();
         $row = $all_penjualan->count();
         if($row == 0){
             $row = 1;
@@ -43,7 +43,7 @@ class PenjualanController extends Controller
 		return view('pages.Penjualan.index',$data);
 	}
 	public function nota(){
-		$all_penjualan = Penjualan::selectRaw('tb_penjualan.*,tb_pelanggan.nama_toko_pelanggan')->join('tb_pelanggan','tb_pelanggan.id_toko_pelanggan','tb_penjualan.id_toko_pelanggan')->orderByRaw("SUBSTRING_INDEX(id_penjualan, '/', -1)",'ASC')->get();
+		$all_penjualan = Penjualan::selectRaw('tb_penjualan.*,tb_pelanggan.nama_toko_pelanggan')->join('tb_pelanggan','tb_pelanggan.id_toko_pelanggan','tb_penjualan.id_toko_pelanggan')->orderByRaw("SUBSTRING_INDEX(id_penjualan, '/', -1) ASC")->get();
 		$data = [
 			'title' => 'BMC | Nota',
 			'all_penjualan' => $all_penjualan,
@@ -140,7 +140,7 @@ class PenjualanController extends Controller
 		if($btn == "add_item"){
 			$detail_penjualan = DetailPenjualan::where('id_penjualan',$id_penjualan )->whereIn('id_barang',$id_barang)->get();
 			
-			$all_penjualan = Penjualan::orderByRaw("SUBSTRING_INDEX(id_penjualan, '/', 3);",'ASC')->get();
+			$all_penjualan = Penjualan::orderByRaw("SUBSTRING_INDEX(id_penjualan, '/', 3) ASC")->get();
 			$row = $all_penjualan->count();
 			if($row == 0){
 				$row = 1;
@@ -263,7 +263,7 @@ class PenjualanController extends Controller
         $jumlah_produk_retur = $_POST['jumlah_produk_retur'];
 		$tanggal_retur = $_POST['tanggal_retur'];
         if($status == "Setuju"){
-            $all_retur = returPenjualan::orderByRaw("SUBSTRING_INDEX(id_retur, '/', 3);",'ASC')->get();
+            $all_retur = returPenjualan::orderByRaw("SUBSTRING_INDEX(id_retur, '/', 3) ASC")->get();
             $row = $all_retur->count();
 				if($row == 0){
 					$row = 1;

@@ -2,7 +2,6 @@
 @section('content')
 
 @include('pages.Ekspedisi.modal')
-{{dd(url(''))}}
 <div class="col-md-12 p-3">
     <div class="card">
         <div class="card-body">

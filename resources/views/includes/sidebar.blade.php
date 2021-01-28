@@ -12,7 +12,7 @@
                 <font class="h5 pl-2"> Pembelian </font>
             </div>
         </a>
-        <a class="row bg-danger shadow" id="nota_pembelian" style="display: none" href="{{asset('/adm/nota-pembelian')}}">
+        <a class="row bg-danger shadow" id="nota_pembelian" style="display: none" href="{{url('/adm/nota-pembelian')}}">
             <div class="p-3 ml-2">
                 <i class="fas fa-clipboard h5"></i>
                 <font class="h5 pl-2"> Nota Pembelian </font>
@@ -30,13 +30,13 @@
                 <font class="h5 pl-2"> Penjualan </font>
             </div>
         </a>
-        <a class="row bg-danger shadow" id="nota_penjualan" style="display: none" href="<?= asset('/adm/nota-penjualan') ?>">
+        <a class="row bg-danger shadow" id="nota_penjualan" style="display: none" href="<?= url('/adm/nota-penjualan') ?>">
             <div class="p-3 ml-2">
                 <i class="fas fa-clipboard h5"></i>
                 <font class="h5 pl-2"> Nota Penjualan </font>
             </div>
         </a>
-        <a class="row bg-primary cr-pointer shadow" style="display: none" id="buat_nota_penjualan" href="{{asset('/adm/penjualan')}}">
+        <a class="row bg-primary cr-pointer shadow" style="display: none" id="buat_nota_penjualan" href="{{url('/adm/penjualan')}}">
             <div class="p-3 ml-2">
                 <i class="fas fa-folder-plus h5"></i>
                 <font class="h5 pl-2"> Buat Nota  </font>
@@ -48,13 +48,13 @@
                 <font class="h5 pl-2"> Retur </font>
             </div>
         </div>
-        <a class="row bg-danger shadow" id="retur_penjualan" style="display: none" href="{{asset('/adm/retur-penjualan')}}">
+        <a class="row bg-danger shadow" id="retur_penjualan" style="display: none" href="{{url('/adm/retur-penjualan')}}">
             <div class="p-3 ml-2">
                 <i class="fas fa-exchange-alt h5"></i>
                 <font class="h5 pl-2"> Retur Penjualan </font>
             </div>
         </a>
-        <a class="row bg-warning shadow" id="retur_pembelian" style="display: none" href="{{asset('/adm/retur-pembelian')}}">
+        <a class="row bg-warning shadow" id="retur_pembelian" style="display: none" href="{{url('/adm/retur-pembelian')}}">
             <div class="p-3 ml-2">
                 <i class="fas fa-exchange-alt h5"></i>
                 <font class="h5 pl-2"> Retur Pembelian </font>
@@ -66,7 +66,7 @@
                 <font class="h5 pl-2"> Stock </font>
             </div>
         </a>
-        <a class="row d-block bg-blue-gray cr-pointer shadow" href="{{asset('/adm/ekspedisi')}}">
+        <a class="row d-block bg-blue-gray cr-pointer shadow" href="{{url('/adm/ekspedisi')}}">
             <div class="p-3">
                 <i class="fas fa-dolly-flatbed h5"></i>
                 <font class="h5 pl-2"> Ekspedisi </font>
@@ -78,13 +78,13 @@
                 <font class="h5 pl-2"> Toko Pelanggan </font>
             </div>
         </a>
-        <a class="row bg-blue-gray cr-pointer shadow" href="{{asset('/adm/penerima')}}">
+        <a class="row bg-blue-gray cr-pointer shadow" href="{{url('/adm/penerima')}}">
             <div class="p-3">
                 <i class="fas fa-handshake h5"></i>
                 <font class="h5 pl-2"> Penerima </font>
             </div>
         </a>
-        <a class="row bg-blue-gray cr-pointer shadow" href="{{asset('/adm/profile')}}">
+        <a class="row bg-blue-gray cr-pointer shadow" href="{{url('/adm/profile')}}">
             <div class="p-3">
                 <i class="fas fa-user-alt h5"></i>
                 <font class="h5 pl-2"> Profile </font>
@@ -92,7 +92,7 @@
         </a>
         @auth
         @if(auth()->user()->level == "Super Admin")
-        <a class="row bg-blue-gray cr-pointer shadow" href="{{asset('/adm/akun')}}">
+        <a class="row bg-blue-gray cr-pointer shadow" href="{{url('/adm/akun')}}">
             <div class="p-3">
                 <i class="fas fa-user-plus h5"></i>
                 <font class="h5 pl-2"> Akun </font>

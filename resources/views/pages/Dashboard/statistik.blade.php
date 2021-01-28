@@ -13,7 +13,7 @@
 </div> 
 @endsection
 @push('js')
-<script src="{{asset('js/Chart.js-2.9.4/dist/Chart.js')}}"></script>
+<script src="{{asset('js/Chart.js')}}"></script>
 <script>
     var ctx = document.getElementById('myChart');
     var myChart = new Chart(ctx, {
